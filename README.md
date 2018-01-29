@@ -30,8 +30,7 @@ There are some past Working Groups that have been using the mechanism for a whil
 
 * CSV on the Web Working Group: https://www.w3.org/2013/csvw/errata/
 * Web Annotation Working Group: https://www.w3.org/annotation/errata/
-* Permissions & Obligations Expression 
-Working Group: https://www.w3.org/2016/poe/errata/
+* Permissions & Obligations Expression Working Group: https://www.w3.org/2016/poe/errata/
 
 
 
