@@ -53,18 +53,28 @@ $(document).ready(function() {
             return obj.name;
         });
         var displayed = false;
-        $("section").each(function(index) {
+        $("main > section").each(function(index) {
             var dataset = $(this).prop('dataset');
             if( _.include(labels, dataset.erratalabel) ) {
-                display_issue($(this), issue, comments, labels)
+                if( _.include(labels, "Editorial") ) {
+                    subsect = $(this).children("section:first-of-type")
+                } else {
+                    subsect = $(this).children("section:last-of-type")
+                }
+                display_issue(subsect, issue, comments, labels)
                 displayed = true;
             }
         });
         if( displayed === false ) {
-            $("section").each(function(index) {
+            $("main > section").each(function(index) {
                 var dataset = $(this).prop('dataset');
                 if( dataset.nolabel !== undefined ) {
-                    display_issue($(this), issue, comments, labels)
+                    if( _.include(labels, "Editorial") ) {
+                        subsect = $(this).children("section:first-of-type")
+                    } else {
+                        subsect = $(this).children("section:last-of-type")
+                    }
+                    display_issue(subsect, issue, comments, labels)
                 }
             });
         }

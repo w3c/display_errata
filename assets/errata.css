@@ -24,12 +24,15 @@ span.tocnumber:not(.tocvisible):not(.tochidden):before {
 }
 
 body {
-	font: 12px arial, helvetica,arial,freesans,clean,sans-serif;
+	font-family: arial, helvetica, freesans, clean, sans-serif;
 	color:black;
 	line-height:1.4em;
 	padding: 2em 2em;
 }
 
+section section {
+	margin-left: 4em;
+}
 /* Links... */
 
 a {
@@ -48,7 +51,7 @@ a:visited {
 }
 
 a:hover{
-	background-color: yellow; 
+	background-color: yellow;
 	color: #00e;
 }
 
@@ -78,7 +81,7 @@ h1, h2, h3, h4, h5, h6
 	font-weight: normal;
 }
 
-footer 
+footer
 {
 	margin-top: 2em;
 	border-top: 1px ridge #ccc;
@@ -100,12 +103,12 @@ headertoclevel1, .headertoclevel2, .headertoclevel3, .headertoclevel4
 	border-bottom: 1px solid #ccc !important;
 }
 
-.headertoclevel1  
+.headertoclevel1
 {
   font-size: 1.5em !important;
 }
 
-.headertoclevel2 
+.headertoclevel2
 {
   font-size: 1.17em !important;
 }
@@ -117,7 +120,7 @@ headertoclevel1, .headertoclevel2, .headertoclevel3, .headertoclevel4
 
 .headertoclevel4, .headertoclevel5 {
 	border: none !important;
-	font-size: 1em !important;	
+	font-size: 1em !important;
 }
 /* --- */
 
@@ -152,4 +155,3 @@ span.what {
 	font-weight: bold;
 	font-style: italic;
 }
-
