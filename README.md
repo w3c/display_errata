@@ -17,6 +17,7 @@ Raising and managing errata is done as follows. Note that the approach below is 
     * The community discusses the issue. If it is accepted as a genuine erratum, the label “`Errata`” is added to the entry and the “`ErratumRaised`” label should be removed. Additionally, a new comment on the issue MAY be added, beginning with the word "Summary:" (if such a summary is useful based on the discussion).
     * If the community rejects the issue as an erratum, the issue should be closed.
     * Each errata may be labelled as “`Editorial`”; editorial errata are listed separately from the substantial ones.
+    * ALL substantive errata are generally expected to have corresponding test(s) (such as a pull request in [web-platforms-tests](https://github.com/web-platforms-tests/wpt)), either in the form of new tests or modifications to existing tests, or must include the rationale for why test updates are not required for the erratum.
 
 That is it. When the `index.html` is fetched, it displays the list of accepted errata, possibly with a summary, and categorized by document. That `index.html` file can be used as the official errata reference in the Recommendation’s header.
 
