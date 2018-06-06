@@ -27,6 +27,8 @@ The `index.html` file must be adapted. Apart from the obvious changes (setting t
 * `@data-githubrepo`, to be set on the `<head>` element to the repository name. For W3C repositories the name is usually of the form `w3c/@@@`, though there are groups that use a different “organization”.
 * `@data-erratalabel` must be set _on each_ top level `<section>` elements, except for the last one, within the `<main>` element. The value should be the label used in the errata repository for the specific document. The last section should be left as is, used by possible errata that are not explicitly assigned to a document.
 
+If an editor's draft is maintained to reflect the text of the published Recommendation amended to include approved errata, you should add link to this document in the `index.html` file.
+
 ## Examples
 
 There is a ”test” version in this repository (it relies on the errata repository of the CSV on the Web WG):
