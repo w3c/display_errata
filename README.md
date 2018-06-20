@@ -1,9 +1,19 @@
 
 # Using Github issues to handle errata in Recommendations
 
-This is a simple file with some associated scripts to handle Errata for published Recommendations. The "model" is as follows:
+## Introduction
 
-* Errata are raised and managed in a github repository (“errata repository” in what follows). This often means re-using the repository used by a Working Group, but that is not required.
+The [W3C Process errata management](https://www.w3.org/2018/Process-20180201/#errata) indicates that Working Groups must keep a record as errors are reported by readers and implementers. Such error reports should be processed no less frequently than quarterly. Readers of the Recommendation should be able easily to find and see the errata that apply to that specific Recommendation with their associated tests. Working Groups decide how to document errata. The best practice is a document that identifies itself as based on the Recommendation text and clearly identifies the errata and any proposed corrections; other approaches include various forms of an errata page, possibly auto-generated from a database.
+
+This repository intends to harmonize how Groups document errata by establishing a workflow to process errors reported by readers and implementers and facilitates the update of errata pages.
+
+The workflow described below is applicable to Recommendations maintained by Working Groups as well as Recommendations without a Working Group (the Working Group was closed). Note that a correction, created within the context of a Working Group or without one, can only become part of the Recommendation by the process for [Revising a Recommendation](https://www.w3.org/2018/Process-20180201/#errata).
+
+## This repository
+
+This repository contains a simple file with some associated scripts to handle and document errata for published Recommendations. The "model" is as follows:
+
+* Errata are raised and managed in a GitHub repository (“errata repository” in what follows). This often means re-using the repository used by a Working Group, if one exists.  If one or more individuals wishes to use this model for a Recommendation which does not have a draft in the W3C GitHub repository, please send an inquiry to the [W3C webmaster](webreq@w3.org) so that he can create one for you.
 * There is a selected group of administrators (not only the team…) that can change the labels for issues in the repository.
 
 Note that the workflow describes the case whereby a single repository is used for several documents. In case the Working Group follows the separate repository per document model, an errata file must be installed separately for each document.
