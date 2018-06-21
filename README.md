@@ -13,7 +13,7 @@ The workflow described below is applicable to Recommendations maintained by Work
 
 This repository contains a simple file with some associated scripts to handle and document errata for published Recommendations. The "model" is as follows:
 
-* Errata are raised and managed in a GitHub repository (“errata repository” in what follows). This often means re-using the repository used by a Working Group, if one exists.  If one or more individuals wishes to use this model for a Recommendation which does not have a draft in the W3C GitHub repository, please send an inquiry to the [W3C webmaster](webreq@w3.org) so that he can create one for you.
+* Errata are raised and managed in a GitHub repository (“errata repository” in what follows). This often means re-using the repository used by a Working Group, if one exists.  If one or more individuals wishes to use this model for a Recommendation which does not have a draft in the W3C GitHub repository, please send an inquiry to the [W3C webmaster](webreq@w3.org) so that they can create one for you.
 * There is a selected group of administrators (not only the team…) that can change the labels for issues in the repository.
 
 Note that the workflow describes the case whereby a single repository is used for several documents. In case the Working Group follows the separate repository per document model, an errata file must be installed separately for each document.
@@ -38,7 +38,7 @@ The `index.html` file must be adapted. Apart from the obvious changes (setting t
 * `@data-githubrepo`, to be set on the `<head>` element to the repository name. For W3C repositories the name is usually of the form `w3c/@@@`, though there are groups that use a different “organization”.
 * `@data-erratalabel` must be set _on each_ top level `<section>` elements, except for the last one, within the `<main>` element. The value should be the label used in the errata repository for the specific document. The last section should be left as is, used by possible errata that are not explicitly assigned to a document.
 
-If an editor's draft is maintained to reflect the text of the published Recommendation amended to include approved errata, you should add link to this document in the `index.html` file.
+If an editor's draft is maintained to reflect the text of the published Recommendation amended to include approved errata, you should add a link to this document in the `index.html` file.
 
 ## Examples
 
