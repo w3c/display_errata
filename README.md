@@ -26,7 +26,7 @@ Raising and managing errata is done as follows. Note that the approach below is 
   * An issue is raised for a possible erratum. The label of the issue SHOULD be set to “`ErratumRaised`”. It SHOULD also include the label corresponding to the document on which the erratum is raised, e.g., “`Model`” or “`Vocab`”. It is o.k. for an erratum to have several labels. In some, exceptional, cases, i.e., when the erratum is very general, it is also acceptable not to have a reference to a document.
   * The community discusses the issue. If it is accepted as a genuine erratum, the label “`Errata`” is added to the entry and the “`ErratumRaised`” label should be removed. Additionally, a new comment on the issue MAY be added, beginning with the word "Summary:" (if such a summary is useful based on the discussion).
   * If the community rejects the issue as an erratum, the issue should be closed.
-  * Each errata may be labelled as “`Editorial`”; editorial errata are listed separately from the substantial ones.
+  * Each errata may be labelled as “`Editorial`”; editorial errata are listed separately from the substantial ones. By default, an issue is considered substantive unless indicated oterhwise.
   * ALL substantive errata are generally expected to have corresponding test(s) (such as a pull request in [web-platforms-tests](https://github.com/web-platforms-tests/wpt)), either in the form of new tests or modifications to existing tests, or must include the rationale for why test updates are not required for the erratum.
 
 That is it. When the `index.html` is fetched, it displays the list of accepted errata, possibly with a summary, and categorized by document. That `index.html` file can be used as the official errata reference in the Recommendation’s header.
