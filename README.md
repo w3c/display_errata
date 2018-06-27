@@ -31,6 +31,10 @@ Raising and managing errata is done as follows. Note that the approach below is 
 
 That is it. When the `index.html` is fetched, it displays the list of accepted errata, possibly with a summary, and categorized by document. That `index.html` file can be used as the official errata reference in the Recommendation’s header.
 
+## How to contribute to the maintenance of a W3C Recommendation?
+
+We would like to encourage the community at large to contribute to the maintenance of W3C Recommendations.  As long as the pull request contains an error that can be resolved by one or more changes in classes 1-3 of [section 6.2.5 Classes of Changes](https://www.w3.org/2018/Process-20180201/#correction-classes), anyone should be able to send a pull request to help fixing issues and consequently better matching the reality of implementations. If the pull request demonstrate usefulness and skills, we will be encouraged to grant commit access to the repository (see [The Pull Request Hack](https://felixge.de/2013/03/11/the-pull-request-hack.html)).
+
 ## Installation
 
 The `index.html` file must be adapted. Apart from the obvious changes (setting the right title, reference to the Working Group, etc), the following attribute values must be set in the source:
