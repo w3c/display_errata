@@ -15,7 +15,12 @@
 ## items to be prepared
 
 * tool (display_errata) to be in each archived repository
+  * gather errata and open issue information from github issues via API
+  * (Q) how much to be automated, like acquiring target information from w3c.json etc.
+  * content handling (errata description etc.) got from issues via API (md to html)
 * periodically running tool for making summary of updates and todo
+  * list issues' activity per label?
+  * having link?
 
 # Using Github issues to handle errata in Recommendations
 
