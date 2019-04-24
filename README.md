@@ -4,12 +4,18 @@
   * [WCAG 2.0 Errata](https://www.w3.org/WAI/WCAG20/errata/)
   * [Errata in SPARQL 1.1](https://www.w3.org/2013/sparql-errata)
   * [CSVW WG errata](https://www.w3.org/2013/csvw/errata/)
+  * [current errata summary email](https://lists.w3.org/Archives/Public/public-maintenance/2019Jan/0000.html)
 * internal links
   * [maintenance ideas](https://lists.w3.org/Archives/Group/ab/2017AprJun/0249.html)
   * [current proc](https://lists.w3.org/Archives/Member/chairs/2018JulSep/0031.html)
   * [moving i18n to GH](https://pad.w3.org/p/spec-maintenance-to-gh)
 * references
   * [monthly github updates](https://www.w3.org/2019/03/commits.html)
+
+## items to be prepared
+
+* tool (display_errata) to be in each archived repository
+* periodically running tool for making summary of updates and todo
 
 # Using Github issues to handle errata in Recommendations
 
