@@ -1,3 +1,8 @@
+# information
+
+* samples
+  * [WCAG 2.0 Errata](https://www.w3.org/WAI/WCAG20/errata/)
+  * [Errata in SPARQL 1.1](https://www.w3.org/2013/sparql-errata)
 
 # Using Github issues to handle errata in Recommendations
 
