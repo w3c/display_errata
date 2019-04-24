@@ -3,6 +3,13 @@
 * samples
   * [WCAG 2.0 Errata](https://www.w3.org/WAI/WCAG20/errata/)
   * [Errata in SPARQL 1.1](https://www.w3.org/2013/sparql-errata)
+  * [CSVW WG errata](https://www.w3.org/2013/csvw/errata/)
+* internal links
+  * [maintenance ideas](https://lists.w3.org/Archives/Group/ab/2017AprJun/0249.html)
+  * [current proc](https://lists.w3.org/Archives/Member/chairs/2018JulSep/0031.html)
+  * [moving i18n to GH](https://pad.w3.org/p/spec-maintenance-to-gh)
+* references
+  * [monthly github updates](https://www.w3.org/2019/03/commits.html)
 
 # Using Github issues to handle errata in Recommendations
 
