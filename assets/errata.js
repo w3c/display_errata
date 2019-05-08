@@ -16,6 +16,23 @@ through some data-* attributes on the elements.
 */
 
 $(document).ready(function() {
+    // convert markdown format text to html via markdown API
+    var convert_md = async function(body_text) {
+        fetch("https://api.github.com/markdown", {
+            body: JSON.stringify({
+                 "text": body_text, "mode": "gfm", "context": "w3c/csswg"
+            }),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            cache: 'no-cache', 
+            method: 'POST', redirect: 'follow' })
+        .then(function(response) {
+            if (response.ok) {console.log(response.text(); }
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
     var display_issue = function(node, issue, comments, labels) {
         var  display_labels = _.reduce(labels, function(memo, label, index) {
             if( label === "Errata" )
@@ -33,6 +50,7 @@ $(document).ready(function() {
                    "<span class='what'>Extra Labels:</span> " + display_labels + "</a><br>"                                    +
                    "</p>");
         div.append("<p><span class='what'><a href='" + issue.html_url + "'>Initial description:</a></span> " + issue.body + "</p>");
+        convert_md(issue.body);
 
         // See if a summary has been added to the comment.
         var summary = undefined;
