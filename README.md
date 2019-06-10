@@ -20,8 +20,19 @@
   * content handling (errata description etc.) got from issues via API (md to html)
     * use [markdown API](https://developer.github.com/v3/markdown/)
   * github API rate limit...
+    * caching system at labs [pheme](https://github.com/w3c/pheme/)
 * periodically running tool for making summary of updates and todo
   * list issues' activity per label?
+    * change category and procedures from [amended recommendation secrion (6.7.2) in Process](https://www.w3.org/2019/Process-20190301/#revised-rec)
+      * editorial changes: which are no tech review required nor no vote against to publish; apply appropriate changes and to be Edited Recommendation
+      * substantive changes: non-editorial without new feature, or voted against to publish; goto CR and publish as Edited Recommendation, or goto candidate Amended Recommendation and to be published as Amended Recommendation
+    * list of errata types from class of [change section (6.2.5) in Process](https://www.w3.org/2019/Process-20190301/#correction-classes)
+      * No change to text content (non-normative, example)
+      * Corrections that do not affect conformance - no resolve ambiguities
+      * Corrections that do not add new feature - affect conformance to the spec
+        * switch ones between conforming and non-conforming
+        * clearify conformance/non-conformance of ambiguity or under-specified whose conformance was unclear
+      * New feature (not target of errata)
   * having link?
 
 # Using Github issues to handle errata in Recommendations
