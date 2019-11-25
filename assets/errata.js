@@ -57,9 +57,9 @@ $(document).ready(function() {
             var dataset = $(this).prop('dataset');
             if( _.include(labels, dataset.erratalabel) ) {
                 if( _.include(labels, "Editorial") ) {
-                    subsect = $(this).children("section:first-of-type")
-                } else {
                     subsect = $(this).children("section:last-of-type")
+                } else {
+                    subsect = $(this).children("section:first-of-type")
                 }
                 display_issue(subsect, issue, comments, labels)
                 displayed = true;
@@ -70,9 +70,9 @@ $(document).ready(function() {
                 var dataset = $(this).prop('dataset');
                 if( dataset.nolabel !== undefined ) {
                     if( _.include(labels, "Editorial") ) {
-                        subsect = $(this).children("section:first-of-type")
-                    } else {
                         subsect = $(this).children("section:last-of-type")
+                    } else {
+                        subsect = $(this).children("section:first-of-type")
                     }
                     display_issue(subsect, issue, comments, labels)
                 }

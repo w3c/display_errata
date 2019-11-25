@@ -40,7 +40,11 @@ We would like to encourage the community at large to contribute to the maintenan
 The `index.html` file must be adapted. Apart from the obvious changes (setting the right title, reference to the Working Group, etc), the following attribute values must be set in the source:
 
 * `@data-githubrepo`, to be set on the `<head>` element to the repository name. For W3C repositories the name is usually of the form `w3c/@@@`, though there are groups that use a different “organization”.
-* `@data-erratalabel` must be set _on each_ top level `<section>` elements, except for the last one, within the `<main>` element. The value should be the label used in the errata repository for the specific document. The last section should be left as is, used by possible errata that are not explicitly assigned to a document.
+* If the WG has published several Recommendations:
+  * `@data-erratalabel` must be set _on each_ top level `<section>` elements, except for the last one, within the `<main>` element. The value should be the label used in the errata repository for the specific document among the published one.
+  * the last section should be left as is (i.e., with `data-nolabel`), and is used by errata that are not explicitly assigned to a document.
+* If the WG has published a single document:
+  * keep only one subsection within `<main>` and use `data-nolabel` for that one.
 
 If an editor's draft is maintained to reflect the text of the published Recommendation amended to include approved errata, you should add a link to this document in the `index.html` file.
 
