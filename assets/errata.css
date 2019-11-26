@@ -17,6 +17,19 @@ div#toc ul, section#toc ul {
 .tocvisible:before { content: "▾ "; font-size: 110%; }
 .tochidden:before  { content: "‣ "; font-size: 110%; }
 
+span.state_open {
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+	background-color: darkseagreen;
+	color: black;
+}
+span.state_closed {
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+	background-color: indianred;
+	color: black;
+}
+
 /* Careful: the content below are two non-breakable spaces (in UTF-8)! */
 span.tocnumber:not(.tocvisible):not(.tochidden):before {
 	content: "  ";
