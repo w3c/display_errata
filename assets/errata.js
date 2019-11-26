@@ -19,9 +19,10 @@ through some data-* attributes on the elements.
 $(document).ready(() => {
     const display_issue = (node, issue, comments, labels) => {
         const display_labels = labels.filter((label) => label !== 'Errata').join(', ');
-        const div = $('<div class="issue"></div>');
+        const div = document.createElement('div');
+        div.className = 'issue';
         node.append(div);
-        div.append(`<h3>"${issue.title}"</h3>`);
+        div.innerHTML = `<h3>"${issue.title}"</h3>`;
 
         let state = 'Open';
         let state_class = 'state_open';
@@ -30,15 +31,18 @@ $(document).ready(() => {
             state_class = 'state_closed';
         }
 
-        let pull_request = (issue.pull_request === undefined) ? "No" : "Yes";
+        const pull_request = (issue.pull_request === undefined) ? "No" : "Yes";
+        const p1 = document.createElement('p');
+        p1.innerHTML = `<span class='what'>Issue number:</span> <a href='${issue.html_url}'>#${issue.number}</a><br>`  +
+                       `<span class='what'>Raised by:</span> <a href='${issue.user.url}'>@${issue.user.login}</a><br>` +
+                       `<span class='what'>Extra labels:</span> ${display_labels}<br>`                                 +
+                       `<span class='what'>Pull request? </span> ${pull_request}<br>`                                  +
+                       `<span class='what'>Status:</span> <span class="${state_class}">${state}</span><br> `           ;
+        div.append(p1);
 
-        div.append(`<p><span class='what'>Issue number:</span> <a href='${issue.html_url}'>#${issue.number}</a><br>` +
-                   `<span class='what'>Raised by:</span> <a href='${issue.user.url}'>@${issue.user.login}</a><br>`   +
-                   `<span class='what'>Extra labels:</span> ${display_labels}<br>`                                   +
-                   `<span class='what'>Pull request? </span> ${pull_request}<br>`                                    +
-                   `<span class='what'>Status:</span> <span class="${state_class}">${state}</span><br> `             +
-                   '</p>');
-        div.append(`<p><span class='what'><a href='${issue.html_url}'>Initial description:</a></span> ${issue.body}</p>`);
+        const p2 = document.createElement('p');
+        p2.innerHTML = `<span class='what'><a href='${issue.html_url}'>Initial description:</a></span> ${issue.body}`;
+        div.append(p2);
 
         // See if a summary has been added to the comment.
         let summary = undefined;
@@ -52,38 +56,47 @@ $(document).ready(() => {
             // @ts-ignore
             const summary_text = summary.body.substr('Summary:'.length)
             // @ts-ignore
-            div.append(`<p><span class='what'><a href='${summary.html_url}'>Erratum summary:</a></span> ${summary_text}</p>`);
+            const p3 = document.createElement('p');
+            p3.innerHTML = `<span class='what'><a href='${summary.html_url}'>Erratum summary:</a></span> ${summary_text}`;
+            div.append(p3);
         }
     }
 
     const render_issue = (issue, comments) => {
-        const labels = issue.labels.map((obj) => {
-            return obj.name;
-        });
-        const get_subsection = (node, lbls) => lbls.includes('Editorial') ? node.children('section:last-of-type') : node.children('section:first-of-type');
+        const labels = issue.labels.map((obj) => obj.name);
+        const get_subsection = (node, lbls) => lbls.includes('Editorial') ? node.querySelector('section:last-of-type') : node.querySelector('section:first-of-type');
 
         let displayed = false;
-        $('main > section').each(function(index) {
-            const dataset = $(this).prop('dataset');
-            if (labels.includes(dataset.erratalabel)) {
-                const subsect = get_subsection($(this), labels);
-                display_issue(subsect, issue, comments, labels)
+        const sections = document.querySelectorAll('main > section');
+
+        // first looking for sections corresponding to the main errata labels
+        sections.forEach((section) => {
+            if (labels.includes(section.dataset.erratalabel)) {
+                const subsection = get_subsection(section, labels);
+                display_issue(subsection, issue, comments, labels)
                 displayed = true;
             }
         });
-        if( displayed === false ) {
-            $('main > section').each(function(index) {
-                const dataset = $(this).prop('dataset');
-                if( dataset.nolabel !== undefined ) {
-                    const subsect = get_subsection($(this), labels);
-                    display_issue(subsect, issue, comments, labels)
+
+        if (!displayed) {
+            // looking for the 'nolabel' data attribute
+            sections.forEach((section) => {
+                if (section.dataset.nolabel !== undefined) {
+                    const subsection = get_subsection(section, labels);
+                    display_issue(subsection, issue, comments, labels)
+                    displayed = true;
                 }
             });
         }
     }
 
+    // @@@ TODO: get over the fetch thing for getting a JSON, and use this
+    // For this, it may be cleaner to get the two functions above into a separate function and what is below becomes then an
+    // async function to be invoked separately... But then again, maybe not, just have an overall function instead of the top level thingy...
 
-    const dataset = $('head').prop('dataset');
+    // Also: the json return may not always be in order. Maybe sorting these by time makes sense!
+
+    const dataset = document.getElementsByTagName('head')[0].dataset;
     if (dataset.githubrepo !== undefined) {
         const url_api    = `https://api.github.com/repos/${dataset.githubrepo}/issues?state=all&labels=Errata`;
         const url_issues = `https://github.com/${dataset.githubrepo}/labels/Errata`;
