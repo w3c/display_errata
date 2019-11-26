@@ -14,30 +14,14 @@ As for the report, the structure of the HTML file can be seen in the index.html 
 that the active issues are displayed in different sections, depending on the presence of specific labels. The relevant values are set
 through some data-* attributes on the elements.
 
-TODO: This code should be re-written...
-
-- throw out JQuery, vanilla JS+DOM should be o.k. by now
-- use modern JS constructs, like arrow functions, let/const, etc
-- underscore is probably unnecessary...
-
-Even more elaborate change: use the octokat library to encapsulate the Github API... that might also be used to control paging size; current code 
-may go wrong if the number of issues is very high...
-
 */
 
 $(document).ready(() => {
     const display_issue = (node, issue, comments, labels) => {
-        var  display_labels = _.reduce(labels, function(memo, label, index) {
-            if( label === "Errata" )
-                return memo
-            else if( memo === "" )
-                return label
-            else
-                return memo + ", " + label
-        }, "");
-        var div = $("<div class='issue'></div>");
+        const display_labels = labels.filter((label) => label !== 'Errata').join(', ');
+        const div = $('<div class="issue"></div>');
         node.append(div);
-        div.append("<h3>\"" + issue.title + "\"</h3>");
+        div.append(`<h3>"${issue.title}"</h3>`);
 
         let state = 'Open';
         let state_class = 'state_open';
@@ -48,63 +32,56 @@ $(document).ready(() => {
 
         let pull_request = (issue.pull_request === undefined) ? "No" : "Yes";
 
-        div.append("<p><span class='what'>Issue number:</span> <a href='" + issue.html_url + "'>#" + issue.number + "</a><br>" +
-                   "<span class='what'>Raised by:</span><a href='" + issue.user.url + "'>@" + issue.user.login + "</a><br>"    +
-                   "<span class='what'>Extra labels:</span> " + display_labels + "</a><br>"                                    +
-                   `<span class='what'>Pull request?</span> ${pull_request}<br>`                                               +
-                   `<span class='what'>Status:</span> <span class="${state_class}">${state}</span><br> `                        +
-                   "</p>");
-        div.append("<p><span class='what'><a href='" + issue.html_url + "'>Initial description:</a></span> " + issue.body + "</p>");
+        div.append(`<p><span class='what'>Issue number:</span> <a href='${issue.html_url}'>#${issue.number}</a><br>` +
+                   `<span class='what'>Raised by:</span> <a href='${issue.user.url}'>@${issue.user.login}</a><br>`   +
+                   `<span class='what'>Extra labels:</span> ${display_labels}<br>`                                   +
+                   `<span class='what'>Pull request? </span> ${pull_request}<br>`                                    +
+                   `<span class='what'>Status:</span> <span class="${state_class}">${state}</span><br> `             +
+                   '</p>');
+        div.append(`<p><span class='what'><a href='${issue.html_url}'>Initial description:</a></span> ${issue.body}</p>`);
 
         // See if a summary has been added to the comment.
-        var summary = undefined;
-        _.each(comments, function(comment) {
-            if( comment.body.search("^Summary:") !== -1 ) {
+        let summary = undefined;
+        comments.forEach((comment) => {
+            if( comment.body.search('^Summary:') !== -1 ) {
                 summary = comment;
             }
-        })
+        });
 
         if( summary !== undefined ) {
-            summary_text = summary.body.substr("Summary:".length)
-            div.append("<p><span class='what'><a href='" + summary.html_url + "'>Erratum summary:</a></span> " + summary_text + "</p>");
+            // @ts-ignore
+            const summary_text = summary.body.substr('Summary:'.length)
+            // @ts-ignore
+            div.append(`<p><span class='what'><a href='${summary.html_url}'>Erratum summary:</a></span> ${summary_text}</p>`);
         }
     }
 
     const render_issue = (issue, comments) => {
-        console.log(issue);
-        const labels = issue.labels.map((obj) => obj.name);
-        const get_subsection = (lbls, element) => {
-            ;
-        }
+        const labels = issue.labels.map((obj) => {
+            return obj.name;
+        });
+        const get_subsection = (node, lbls) => lbls.includes('Editorial') ? node.children('section:last-of-type') : node.children('section:first-of-type');
 
         let displayed = false;
-        $('main > section').each((index) => {
+        $('main > section').each(function(index) {
             const dataset = $(this).prop('dataset');
             if (labels.includes(dataset.erratalabel)) {
-                if (labels.includes('Editorial')) {
-                    subsect = $(this).children('section:last-of-type');
-                } else {
-                    subsect = $(this).children('section:first-of-type');
-                }
-                display_issue(subsect, issue, comments, labels);
+                const subsect = get_subsection($(this), labels);
+                display_issue(subsect, issue, comments, labels)
                 displayed = true;
             }
         });
         if( displayed === false ) {
-            $('main > section').each((index) => {
-                console.log($(this));
+            $('main > section').each(function(index) {
                 const dataset = $(this).prop('dataset');
                 if( dataset.nolabel !== undefined ) {
-                    if (labels.includes('Editorial')) {
-                        subsect = $(this).children('section:last-of-type');
-                    } else {
-                        subsect = $(this).children('section:first-of-type');
-                    }
+                    const subsect = get_subsection($(this), labels);
                     display_issue(subsect, issue, comments, labels)
                 }
             });
         }
     }
+
 
     const dataset = $('head').prop('dataset');
     if (dataset.githubrepo !== undefined) {
