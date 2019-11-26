@@ -25,8 +25,8 @@ may go wrong if the number of issues is very high...
 
 */
 
-$(document).ready(function() {
-    var display_issue = function(node, issue, comments, labels) {
+$(document).ready(() => {
+    const display_issue = (node, issue, comments, labels) => {
         var  display_labels = _.reduce(labels, function(memo, label, index) {
             if( label === "Errata" )
                 return memo
@@ -70,31 +70,35 @@ $(document).ready(function() {
         }
     }
 
-    var render_issue = function(issue, comments) {
-        var labels = _.map(issue.labels, function (obj) {
-            return obj.name;
-        });
-        var displayed = false;
-        $("main > section").each(function(index) {
-            var dataset = $(this).prop('dataset');
-            if( _.include(labels, dataset.erratalabel) ) {
-                if( _.include(labels, "Editorial") ) {
-                    subsect = $(this).children("section:last-of-type")
+    const render_issue = (issue, comments) => {
+        console.log(issue);
+        const labels = issue.labels.map((obj) => obj.name);
+        const get_subsection = (lbls, element) => {
+            ;
+        }
+
+        let displayed = false;
+        $('main > section').each((index) => {
+            const dataset = $(this).prop('dataset');
+            if (labels.includes(dataset.erratalabel)) {
+                if (labels.includes('Editorial')) {
+                    subsect = $(this).children('section:last-of-type');
                 } else {
-                    subsect = $(this).children("section:first-of-type")
+                    subsect = $(this).children('section:first-of-type');
                 }
-            display_issue(subsect, issue, comments, labels)
+                display_issue(subsect, issue, comments, labels);
                 displayed = true;
             }
         });
         if( displayed === false ) {
-            $("main > section").each(function(index) {
-                var dataset = $(this).prop('dataset');
+            $('main > section').each((index) => {
+                console.log($(this));
+                const dataset = $(this).prop('dataset');
                 if( dataset.nolabel !== undefined ) {
-                    if( _.include(labels, "Editorial") ) {
-                        subsect = $(this).children("section:last-of-type")
+                    if (labels.includes('Editorial')) {
+                        subsect = $(this).children('section:last-of-type');
                     } else {
-                        subsect = $(this).children("section:first-of-type")
+                        subsect = $(this).children('section:first-of-type');
                     }
                     display_issue(subsect, issue, comments, labels)
                 }
@@ -102,23 +106,23 @@ $(document).ready(function() {
         }
     }
 
-    dataset = $('head').prop('dataset');
+    const dataset = $('head').prop('dataset');
     if (dataset.githubrepo !== undefined) {
-        var url_api    = "https://api.github.com/repos/" + dataset.githubrepo + "/issues?state=all&labels=Errata";
-        var url_issues = "https://github.com/" + dataset.githubrepo + "/labels/Errata";
-        $.getJSON(url_api, function (allIssues) {
+        const url_api    = `https://api.github.com/repos/${dataset.githubrepo}/issues?state=all&labels=Errata`;
+        const url_issues = `https://github.com/${dataset.githubrepo}/labels/Errata`;
+        $.getJSON(url_api, (allIssues) => {
             if( allIssues.length > 0 ) {
-                var latest_change = moment.max(_.map(allIssues, function(item) {
+                const latest_change = moment.max(allIssues.map((item) => {
                     return moment(item.updated_at)
                 }));
-                $("span#date").append(latest_change.format("dddd, MMMM Do YYYY"));
+                $('span#date').append(latest_change.format('dddd, MMMM Do YYYY'));
             } else {
-                $("span#date").append("N/A");
+                $('span#date').append('N/A');
             }
-            $("span#number").append(allIssues.length);
-            $("span#errata_link").append("<a href='" + url_issues + "'>" + url_issues + "</a>");
-            $.each(allIssues, function (i, issue) {
-                $.getJSON(issue.comments_url, function(comments) {
+            $('span#number').append(allIssues.length);
+            $('span#errata_link').append(`<a href='${url_issues}'>${url_issues}</a>`);
+            $.each(allIssues, (i, issue) => {
+                $.getJSON(issue.comments_url, (comments) => {
                     render_issue(issue, comments);
                 });
             });
