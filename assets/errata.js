@@ -105,7 +105,7 @@ $(document).ready(function() {
     dataset = $('head').prop('dataset');
     if (dataset.githubrepo !== undefined) {
         var url_api    = "https://api.github.com/repos/" + dataset.githubrepo + "/issues?state=all&labels=Errata";
-        var url_issues = "https://github.com/" + dataset.githubrepo + "/labels/Errata";
+        var url_issues = "https://github.com/" + dataset.githubrepo + "/issues?q=label%3AErrata";
         $.getJSON(url_api, function (allIssues) {
             if( allIssues.length > 0 ) {
                 var latest_change = moment.max(_.map(allIssues, function(item) {
