@@ -13,6 +13,16 @@ a new comment on the issue may be added beginning with the word "Summary".
 As for the report, the structure of the HTML file can be seen in the index.html file. The net result is
 that the active issues are displayed in different sections, depending on the presence of specific labels. The relevant values are set
 through some data-* attributes on the elements.
+
+TODO: This code should be re-written...
+
+- throw out JQuery, vanilla JS+DOM should be o.k. by now
+- use modern JS constructs, like arrow functions, let/const, etc
+- underscore is probably unnecessary...
+
+Even more elaborate change: use the octokat library to encapsulate the Github API... that might also be used to control paging size; current code 
+may go wrong if the number of issues is very high...
+
 */
 
 $(document).ready(function() {
@@ -28,9 +38,21 @@ $(document).ready(function() {
         var div = $("<div class='issue'></div>");
         node.append(div);
         div.append("<h3>\"" + issue.title + "\"</h3>");
+
+        let state = 'Open';
+        let state_class = 'state_open';
+        if (issue.state !== 'open') {
+            state = 'Closed';
+            state_class = 'state_closed';
+        }
+
+        let pull_request = (issue.pull_request === undefined) ? "No" : "Yes";
+
         div.append("<p><span class='what'>Issue number:</span> <a href='" + issue.html_url + "'>#" + issue.number + "</a><br>" +
                    "<span class='what'>Raised by:</span><a href='" + issue.user.url + "'>@" + issue.user.login + "</a><br>"    +
-                   "<span class='what'>Extra Labels:</span> " + display_labels + "</a><br>"                                    +
+                   "<span class='what'>Extra labels:</span> " + display_labels + "</a><br>"                                    +
+                   `<span class='what'>Pull request?</span> ${pull_request}<br>`                                               +
+                   `<span class='what'>Status:</span> <span class="${state_class}">${state}</span><br> `                        +
                    "</p>");
         div.append("<p><span class='what'><a href='" + issue.html_url + "'>Initial description:</a></span> " + issue.body + "</p>");
 
@@ -57,11 +79,11 @@ $(document).ready(function() {
             var dataset = $(this).prop('dataset');
             if( _.include(labels, dataset.erratalabel) ) {
                 if( _.include(labels, "Editorial") ) {
-                    subsect = $(this).children("section:first-of-type")
-                } else {
                     subsect = $(this).children("section:last-of-type")
+                } else {
+                    subsect = $(this).children("section:first-of-type")
                 }
-                display_issue(subsect, issue, comments, labels)
+            display_issue(subsect, issue, comments, labels)
                 displayed = true;
             }
         });
@@ -70,9 +92,9 @@ $(document).ready(function() {
                 var dataset = $(this).prop('dataset');
                 if( dataset.nolabel !== undefined ) {
                     if( _.include(labels, "Editorial") ) {
-                        subsect = $(this).children("section:first-of-type")
-                    } else {
                         subsect = $(this).children("section:last-of-type")
+                    } else {
+                        subsect = $(this).children("section:first-of-type")
                     }
                     display_issue(subsect, issue, comments, labels)
                 }
@@ -82,7 +104,7 @@ $(document).ready(function() {
 
     dataset = $('head').prop('dataset');
     if (dataset.githubrepo !== undefined) {
-        var url_api    = "https://api.github.com/repos/" + dataset.githubrepo + "/issues?state=open&labels=Errata";
+        var url_api    = "https://api.github.com/repos/" + dataset.githubrepo + "/issues?state=all&labels=Errata";
         var url_issues = "https://github.com/" + dataset.githubrepo + "/labels/Errata";
         $.getJSON(url_api, function (allIssues) {
             if( allIssues.length > 0 ) {
