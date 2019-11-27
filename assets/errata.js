@@ -151,10 +151,9 @@ async function process_issues() {
         const all_issues = await fetch_json(url_api);        
         const date_element = document.querySelector('span#date');
         if( all_issues.length > 0 ) {
-            const latest_change = moment.max(all_issues.map((item) => {
-                return moment(item.updated_at)
-            }));
-            date_element.textContent = latest_change.format('dddd, MMMM Do YYYY');
+            const all_dates = all_issues.map((item) => new Date(item.updated_at));
+            const latest_change = all_dates.reduce((acc,current) => acc < current ? current:acc);
+            date_element.textContent = latest_change.toDateString();
         } else {
             date_element.textContent = 'n/a';
         }
