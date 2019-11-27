@@ -22,23 +22,9 @@ through some data-* attributes on the elements.
  * @param {string} resource_url 
  */
 async function fetch_json(resource_url) {
-    // If there is a problem, an exception is raised
-    return new Promise((resolve, reject) => {
-        try {
-            // This is a real URL, whose content must be accessed via HTTP(S)
-            // An exception is raised if the URL has security/sanity issues.
-            fetch(resource_url)
-                .then((response) => {
-                    return response.text();
-                })
-                .then((body) => {
-                    resolve(JSON.parse(body));
-                })
-        } catch (err) {
-            reject(err);
-        }
-    });
-};
+    return fetch(resource_url).then((response) => response.json());
+}
+
 
 /**
  * Display a single issue with all its comments. The array of comments is used to look for a 'Summary' note; if found, added to the issue display.
@@ -78,12 +64,12 @@ function display_issue(node, issue, comments, labels) {
     // See if a summary has been added to the comment.
     let summary = undefined;
     comments.forEach((comment) => {
-        if( comment.body.search('^Summary:') !== -1 ) {
+        if (comment.body.search('^Summary:') !== -1 ) {
             summary = comment;
         }
     });
 
-    if( summary !== undefined ) {
+    if (summary) {
         // @ts-ignore
         const summary_text = summary.body.substr('Summary:'.length)
         // @ts-ignore
@@ -150,7 +136,7 @@ async function process_issues() {
 
         const all_issues = await fetch_json(url_api);        
         const date_element = document.querySelector('span#date');
-        if( all_issues.length > 0 ) {
+        if (all_issues.length > 0) {
             const all_dates = all_issues.map((item) => new Date(item.updated_at));
             const latest_change = all_dates.reduce((acc,current) => acc < current ? current:acc);
             date_element.textContent = latest_change.toDateString();
