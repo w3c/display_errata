@@ -14,8 +14,16 @@ div#toc ul, section#toc ul {
 }
 
 .tocvisible, .tochidden { cursor: pointer; }
-.tocvisible:before { content: "▾ "; font-size: 110%; }
-.tochidden:before  { content: "‣ "; font-size: 110%; }
+.tocvisible:before {
+	content: "▾ ";
+	font-size: 110%; 
+	font-family: monospace;
+}
+.tochidden:before  { 
+	content: "‣ "; 
+	font-size: 110%; 
+	font-family: monospace;
+}
 
 span.state_open {
 	padding-left: 0.2em;
