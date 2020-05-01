@@ -47,7 +47,7 @@ span.tocnumber:not(.tocvisible):not(.tochidden):before {
 body {
 	font-family: arial, helvetica, freesans, clean, sans-serif;
 	color:black;
-	line-height:1.4em;
+	/* line-height:1.4em; */
 	padding: 2em 2em;
 }
 
