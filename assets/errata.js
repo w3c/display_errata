@@ -13,6 +13,8 @@ a new comment on the issue may be added beginning with the word "Summary".
 As for the report, the structure of the HTML file can be seen in the index.html file. The net result is
 that the active issues are displayed in different sections, depending on the presence of specific labels. The relevant values are set
 through some data-* attributes on the elements.
+
+Showdown must be loaded!
 */
 
 /**
@@ -36,6 +38,9 @@ async function fetch_json(resource_url) {
  */
 function display_issue(node, issue, comments, labels) {
     const display_labels = labels.filter((label) => label !== 'Errata').join(', ');
+
+    converter = new showdown.Converter();
+
     const div = document.createElement('div');
     div.className = 'issue';
     node.append(div);
@@ -57,9 +62,10 @@ function display_issue(node, issue, comments, labels) {
                     `<span class='what'>Status:</span> <span class="${state_class}">${state}</span><br> `           ;
     div.append(p1);
 
-    const p2 = document.createElement('p');
-    p2.innerHTML = `<span class='what'><a href='${issue.html_url}'>Initial description:</a></span> ${issue.body}`;
-    div.append(p2);
+    const div2 = document.createElement('div');
+    alert(converter(issue.body));
+    div2.innerHTML = `<span class='what'><a href='${issue.html_url}'>Initial description:</a></span> <div>${converter(issue.body)}</div2>`;
+    div.append(div2);
 
     // See if a summary has been added to the comment.
     let summary = undefined;
@@ -73,9 +79,9 @@ function display_issue(node, issue, comments, labels) {
         // @ts-ignore
         const summary_text = summary.body.substr('Summary:'.length)
         // @ts-ignore
-        const p3 = document.createElement('p');
-        p3.innerHTML = `<span class='what'><a href='${summary.html_url}'>Erratum summary:</a></span> ${summary_text}`;
-        div.append(p3);
+        const div3 = document.createElement('div');
+        div3.innerHTML = `<span class='what'><a href='${summary.html_url}'>Erratum summary:</a></span> <div>${converter(summary_text)}</div>`;
+        div.append(div3);
     }
 }
 
