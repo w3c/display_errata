@@ -38,6 +38,7 @@ function display_issue(node, issue, comments, labels) {
     const display_labels = labels.filter((label) => label !== 'Errata').join(', ');
     const div = document.createElement('div');
     div.className = 'issue';
+    div.id = `Erratum_${issue.number}`;
     node.append(div);
     div.innerHTML = `<h3>"${issue.title}"</h3>`;
 
