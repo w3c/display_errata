@@ -26,7 +26,16 @@ through some data-* attributes on the elements.
  * @param {string} resource_url 
  */
 async function fetch_json(resource_url) {
-    return fetch(resource_url).then((response) => response.json());
+    const response = await fetch(resource_url);
+    if (response.status === 403) {
+        alert("Error retrieving data from the GitHub API. This is probably a quota issue. Please retry later.");
+        return;
+    } else if (response.status > 299) {
+        alert("Something went wrong: " + response.status + " " + response.statusText);
+        return;
+    } else {
+        return await response.json();
+    }
 }
 
 
@@ -145,6 +154,9 @@ async function process_issues() {
         const url_issues = `https://github.com/${dataset.githubrepo}/issues?q=label%3AErrata`;
 
         const all_issues = await fetch_json(url_api);        
+        if (all_issues === undefined) {
+            return;
+        }
         const date_element = document.querySelector('span#date');
         if (all_issues.length > 0) {
             const all_dates = all_issues.map((item) => new Date(item.updated_at));
